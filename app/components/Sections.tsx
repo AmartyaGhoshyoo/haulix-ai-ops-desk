@@ -488,7 +488,7 @@ export function Footer() {
             {SITE.by.name}
           </a>
         </p>
-        <p className="font-mono text-[0.76rem]">Demo · sample data · footage: Mixkit (free licence)</p>
+        <p className="font-mono text-[0.76rem]">Demo · sample data · every screen drawn live in your browser</p>
       </Wrap>
     </footer>
   );
