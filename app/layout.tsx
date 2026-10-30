@@ -12,12 +12,12 @@ export const metadata: Metadata = {
   description: "Nine AI agents that take orders, quote lanes, plan routes, watch every shipment and fix problems — and ask a person before anything costly happens. By Zovak.",
 };
 
-export const viewport: Viewport = { themeColor: "#111317" };
+export const viewport: Viewport = { themeColor: "#0a0d1a" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${body.variable} ${mono.variable}`}>
-      <body className="antialiased">
+    <html lang="en" suppressHydrationWarning className={`${body.variable} ${mono.variable}`}>
+      <body className="antialiased" suppressHydrationWarning>
         <Providers>{children}</Providers>
         <Agent />
       </body>

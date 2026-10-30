@@ -1,19 +1,18 @@
-import Hero from "./components/Hero";
-import Journey from "./components/Journey";
-import { Agents, Console, Finale, Footer, Marquee, Nav, Trust } from "./components/Sections";
+import World from "./components/World";
+import { Desk, Fleet, Footer, Nav, Network, Rules, Storm, Tower } from "./components/Sections";
 
 export default function Home() {
   return (
     <>
+      <World />
       <Nav />
       <main>
-        <Hero />
-        <Marquee />
-        <Journey />
-        <Agents />
-        <Console />
-        <Trust />
-        <Finale />
+        <Network />
+        <Fleet />
+        <Tower />
+        <Storm />
+        <Desk />
+        <Rules />
       </main>
       <Footer />
     </>

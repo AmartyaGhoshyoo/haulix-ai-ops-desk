@@ -1,57 +1,66 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Haulix: dark graphite control room, signal yellow, white type, red/green status. */
-  --color-graphite: #111317;
-  --color-panel: #1c2027;
-  --color-ink: #f5f5f0;
-  --color-signal: #ffd23f;
-  --color-danger: #ff5a5a;
-  --color-ok: #3ddc84;
+  /* Haulix "radar": midnight, electric blue, signal red — like trucks' lights at night. */
+  --color-night: #0a0d1a;
+  --color-deck: #121729;
+  --color-ink: #eef1fa;
+  --color-radar: #2f6bff;
+  --color-radar-soft: #6e95ff;
+  --color-flare: #ff3b5c;
+  --color-ok: #2ee6a6;
   --font-sans: var(--font-body-face), system-ui, sans-serif;
   --font-mono: var(--font-mono-face), ui-monospace, monospace;
   --font-display: var(--font-body-face), system-ui, sans-serif;
 }
 
 :root {
-  --accent-ink: #ffd23f;
+  --accent-ink: #6e95ff;
   /* Assistant widget */
-  --w-bg: #15181d;
-  --w-surface: #1f242c;
-  --w-ink: #f5f5f0;
-  --w-muted: rgba(245, 245, 240, 0.6);
-  --w-line: rgba(245, 245, 240, 0.12);
-  --w-accent: #ffd23f;
-  --w-on-accent: #111317;
-  --w-accent-ink: #ffd23f;
-  --w-ok: #3ddc84;
-  --w-warn: #ff5a5a;
-  --w-orb-a: #ffd23f;
-  --w-orb-b: #ff8a3d;
+  --w-bg: #0f1324;
+  --w-surface: #171d36;
+  --w-ink: #eef1fa;
+  --w-muted: rgba(238, 241, 250, 0.6);
+  --w-line: rgba(238, 241, 250, 0.12);
+  --w-accent: #2f6bff;
+  --w-on-accent: #ffffff;
+  --w-accent-ink: #6e95ff;
+  --w-ok: #2ee6a6;
+  --w-warn: #ff3b5c;
+  --w-orb-a: #2f6bff;
+  --w-orb-b: #ff3b5c;
   --w-font: var(--font-body-face), system-ui, sans-serif;
 }
 
 html {
-  background: #111317;
+  background: #0a0d1a;
   overflow-x: clip;
 }
 body {
-  background: #111317;
+  background: transparent;
   color: #f5f5f0;
   font-family: var(--font-body-face), system-ui, sans-serif;
 }
 ::selection {
-  background: rgba(255, 210, 63, 0.35);
+  background: rgba(47, 107, 255, 0.4);
 }
-/* Hazard-tape divider */
-.tape {
-  background: repeating-linear-gradient(-45deg, #ffd23f 0 14px, #111317 14px 28px);
+/* Glass panel that floats over the 3D world */
+.hud {
+  background: linear-gradient(150deg, rgba(23, 29, 54, 0.78), rgba(10, 13, 26, 0.62));
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(110, 149, 255, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 30px 80px -30px rgba(0, 0, 0, 0.8);
 }
-.gridlines {
-  background-image:
-    linear-gradient(rgba(245, 245, 240, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245, 245, 240, 0.045) 1px, transparent 1px);
-  background-size: 48px 48px;
+.glow-text {
+  background: linear-gradient(90deg, #6e95ff, #2f6bff 40%, #ff3b5c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@keyframes scan {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(400%); }
 }
 
 html.lenis,

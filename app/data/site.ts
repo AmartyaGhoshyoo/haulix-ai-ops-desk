@@ -54,15 +54,15 @@ export const CHAPTERS = [
 ];
 
 export const AGENTS = [
-  { name: "Intake", does: "Turns emails, chats, PDFs and calls into bookings", icon: "inbox" },
-  { name: "Quoting", does: "Prices lanes across carriers; proposes the best", icon: "receipt" },
-  { name: "Route planner", does: "Builds and re-plans multi-stop routes live", icon: "route" },
-  { name: "Dispatcher", does: "Assigns drivers and trucks, sends job sheets", icon: "truck" },
-  { name: "Warehouse", does: "Plans waves, slotting and replenishment", icon: "boxes" },
-  { name: "Exception", does: "Spots risk early, prepares reroutes and rebookings", icon: "alert" },
-  { name: "Customer comms", does: "Answers 'where is my parcel' on chat, voice, WhatsApp", icon: "message" },
-  { name: "Customs & docs", does: "Drafts invoices, packing lists, HS codes for review", icon: "file" },
-  { name: "Billing & claims", does: "Matches POD, drafts invoices, assembles claims", icon: "wallet" },
+  { name: "Intake", today: "Read 214 emails and 61 WhatsApps → 148 booking drafts, 9 asked for missing details", does: "Turns emails, chats, PDFs and calls into bookings", icon: "inbox" },
+  { name: "Quoting", today: "Priced 87 lanes across 6 carriers; 31 auto-booked under the $500 limit", does: "Prices lanes across carriers; proposes the best", icon: "receipt" },
+  { name: "Route planner", today: "Re-planned 36 trucks 4 times today; −412 km in total", does: "Builds and re-plans multi-stop routes live", icon: "route" },
+  { name: "Dispatcher", today: "Assigned 52 loads; every driver within legal hours", does: "Assigns drivers and trucks, sends job sheets", icon: "truck" },
+  { name: "Warehouse", today: "Planned 6 pick waves around truck departures; 2 reorders waiting for OK", does: "Plans waves, slotting and replenishment", icon: "boxes" },
+  { name: "Exception", today: "Flagged 7 at-risk shipments before customers noticed; 3 reroutes proposed", does: "Spots risk early, prepares reroutes and rebookings", icon: "alert" },
+  { name: "Customer comms", today: "Answered 1,906 'where is my parcel?' — 81% without a person", does: "Answers 'where is my parcel' on chat, voice, WhatsApp", icon: "message" },
+  { name: "Customs & docs", today: "Drafted 44 invoice + packing-list sets; caught 3 HS-code mismatches", does: "Drafts invoices, packing lists, HS codes for review", icon: "file" },
+  { name: "Billing & claims", today: "Matched 129 PODs, drafted 129 invoices, assembled 2 claim packs", does: "Matches POD, drafts invoices, assembles claims", icon: "wallet" },
 ];
 
 export const SHIPMENTS = [

@@ -3,10 +3,14 @@
 A marketing + demo site for an agentic logistics product by Zovak. Nine AI agents take orders,
 quote lanes, plan routes, watch shipments and fix problems — and ask a person before anything costly.
 
-- **3D globe** (three.js) with real hubs and live shipment arcs
-- **Pinned scroll story:** one shipment, six agents (intake → quote → route → warehouse → exception → billing)
-- **Live ops desk mock:** shipments table, KPI counters, streaming agent log
+- **One 3D world, one camera flight:** as you scroll, the camera flies from a dotted globe in orbit down
+  to a night city (trucks leave red/blue light trails), the port with a 9-container agent tower,
+  a storm over the highway, and a top-down map (`app/components/World.tsx`, three.js, all drawn in code)
+- **Buttons drive the world:** "Drop in a 2 pm order" re-plans every truck, picking an agent lifts its
+  container, "Approve detour" draws the reroute around the storm
+- **Ops desk** with Shipments / Quotes / Inbox tabs, and the guardrails
 - **Chat + voice assistant** (Zovak web widget) in demo mode with sample data
+- Palette "radar": midnight #0A0D1A, electric blue #2F6BFF, signal red #FF3B5C; Fira Sans + Fira Code
 
 ## Run
 
