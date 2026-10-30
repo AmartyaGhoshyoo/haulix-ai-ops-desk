@@ -58,6 +58,12 @@ body {
   background-clip: text;
   color: transparent;
 }
+@keyframes dash {
+  to { stroke-dashoffset: -48; }
+}
+@keyframes rain {
+  to { background-position: -60px 220px; }
+}
 @keyframes scan {
   from { transform: translateY(-100%); }
   to { transform: translateY(400%); }

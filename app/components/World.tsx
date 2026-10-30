@@ -437,7 +437,8 @@ export default function World() {
     };
     const loop = () => {
       frame = requestAnimationFrame(loop);
-      if (!document.hidden) draw();
+      // Skip rendering while real footage fully covers the 3D world.
+      if (!document.hidden && document.documentElement.dataset.cover !== "1") draw();
     };
     if (still) {
       draw();

@@ -6,6 +6,8 @@ quote lanes, plan routes, watch shipments and fix problems — and ask a person 
 - **One 3D world, one camera flight:** as you scroll, the camera flies from a dotted globe in orbit down
   to a night city (trucks leave red/blue light trails), the port with a 9-container agent tower,
   a storm over the highway, and a top-down map (`app/components/World.tsx`, three.js, all drawn in code)
+- **Real footage** (Mixkit free licence) for the fleet, port, storm and map stops, cross-faded over the
+  3D world with a live HUD on top (route lines, agent target box, blocked road + detour, radar sweep)
 - **Buttons drive the world:** "Drop in a 2 pm order" re-plans every truck, picking an agent lifts its
   container, "Approve detour" draws the reroute around the storm
 - **Ops desk** with Shipments / Quotes / Inbox tabs, and the guardrails

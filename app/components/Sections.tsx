@@ -223,9 +223,9 @@ export function Tower() {
         <div className="hud max-w-[38rem] rounded-3xl p-6 md:p-8">
           <Kicker>Control tower · port</Kicker>
           <h2 className="mt-4 text-[clamp(2rem,4vw,3.1rem)] font-extrabold uppercase leading-[0.95]">
-            <RiseWords text="Nine agents. *One stack.*" />
+            <RiseWords text="Nine agents. *One port.*" />
           </h2>
-          <p className="mt-3 text-ink/70">Each container is one agent with one job. Pick one — it lifts out of the stack and shows what it did today.</p>
+          <p className="mt-3 text-ink/70">Each agent owns one job across the port and the roads. Pick one — the tower locks on and shows what it did today.</p>
           <div className="mt-6 grid grid-cols-3 gap-2">
             {AGENTS.map((ag, i) => {
               const I = AGENT_ICONS[ag.icon] ?? Inbox;
@@ -488,7 +488,7 @@ export function Footer() {
             {SITE.by.name}
           </a>
         </p>
-        <p className="font-mono text-[0.76rem]">Demo · sample data · the 3D world is drawn live in your browser</p>
+        <p className="font-mono text-[0.76rem]">Demo · sample data · footage: Mixkit (free licence)</p>
       </Wrap>
     </footer>
   );
