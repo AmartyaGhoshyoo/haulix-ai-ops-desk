@@ -1,20 +1,19 @@
-import World from "./components/World";
-import { Desk, Fleet, Footer, Nav, Network, Rules, Storm, Tower } from "./components/Sections";
+import Planet from "./components/Planet";
+import { Agents, Closing, Hero, Nav, Network, Trust, WorkstationSection } from "./components/Sections";
 
 export default function Home() {
   return (
     <>
-      <World />
+      <Planet />
       <Nav />
-      <main>
+      <main className="relative z-[1]">
+        <Hero />
+        <WorkstationSection />
+        <Agents />
         <Network />
-        <Fleet />
-        <Tower />
-        <Storm />
-        <Desk />
-        <Rules />
+        <Trust />
+        <Closing />
       </main>
-      <Footer />
     </>
   );
 }

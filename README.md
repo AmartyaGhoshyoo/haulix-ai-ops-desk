@@ -3,15 +3,15 @@
 A marketing + demo site for an agentic logistics product by Zovak. Nine AI agents take orders,
 quote lanes, plan routes, watch shipments and fix problems — and ask a person before anything costly.
 
-- **True 3D camera flight through four real places** (`app/components/World.tsx` + `app/components/world/*`):
-  the Earth from orbit (NASA day/night/cloud textures, live shipping lanes), a night motorway interchange
-  and a container port (real Unsplash aerial photos raised into 3D with a Depth-Anything depth map, so
-  flyovers and container stacks stand up and the camera flies over them), and a warehouse built from
-  CC0 Poly Haven models (steel shelving, boxes, crates, crane, doors, lamps) lit by a real warehouse HDRI.
-  Each section's `data-cam` picks a station; scrolling moves the camera from shot `a` to shot `b`, and
-  changing place cuts through black like a film edit
-- **Buttons drive the world:** "Drop in a 2 pm order" re-plans every route arc and robot, picking an agent
-  lights its warehouse bay in red, "Approve detour" draws the blue reroute around the storm-blocked lane
+- **HD planet behind the page** (`app/components/Planet.tsx`): 8K day/night Earth maps (Solar System Scope,
+  CC BY 4.0, from NASA data), ocean mask for sun glint and flowing water, two drifting cloud shells, an
+  atmosphere, stars, and the Haulix network — pulsing hubs at real ports and glowing lanes (red = open
+  exception). Bloom + a soft corner nebula. It rises huge behind the hero, then zooms out and swings
+  left → right → centre as you scroll. Phones get 4K maps.
+- **The agent workstation** (`app/components/Workstation.tsx`), the heart of the page: a live desk where
+  emails/WhatsApps/PDFs/calls become bookings, a route planner where a 2 pm order re-plans the run, an
+  exception queue with Approve / Decline (cost + ETA per proposal), and an ops board
+- Glass sections: the nine agents, network numbers, guardrails, closing CTA
 - **Ops desk** with Shipments / Quotes / Inbox tabs, and the guardrails
 - **Chat + voice assistant** (Zovak web widget) in demo mode with sample data
 - Palette "radar": midnight #0A0D1A, electric blue #2F6BFF, signal red #FF3B5C; Fira Sans + Fira Code

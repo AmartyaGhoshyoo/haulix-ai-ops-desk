@@ -11,7 +11,7 @@
   --color-ok: #2ee6a6;
   --font-sans: var(--font-body-face), system-ui, sans-serif;
   --font-mono: var(--font-mono-face), ui-monospace, monospace;
-  --font-display: var(--font-body-face), system-ui, sans-serif;
+  --font-display: var(--font-display-face), system-ui, sans-serif;
 }
 
 :root {
@@ -33,7 +33,7 @@
 }
 
 html {
-  background: #0a0d1a;
+  background: #03050e;
   overflow-x: clip;
 }
 body {
@@ -97,3 +97,28 @@ html.lenis body {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Glass for the sections over the planet */
+.glass {
+  background: rgba(12, 17, 36, 0.55);
+  border: 1px solid rgba(150, 175, 230, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.glass:hover { border-color: rgba(150, 175, 230, 0.22); }
+.glass-strong {
+  background: rgba(14, 20, 42, 0.68);
+  border: 1px solid rgba(150, 175, 230, 0.2);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+.ws {
+  background: linear-gradient(180deg, rgba(16, 22, 46, 0.86), rgba(8, 11, 24, 0.9));
+  border: 1px solid rgba(150, 175, 230, 0.18);
+  box-shadow: 0 40px 120px -40px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(47, 107, 255, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+}
+/* Copy stays legible wherever the bright planet passes behind it. */
+main h1, main h2, main > header p, main section > div > div > p { text-shadow: 0 1px 26px rgba(3, 5, 14, 0.75), 0 0 2px rgba(3, 5, 14, 0.5); }

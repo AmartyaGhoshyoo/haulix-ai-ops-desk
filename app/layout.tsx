@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Fira_Code, Fira_Sans } from "next/font/google";
+import { Fira_Code, Fira_Sans, Sora } from "next/font/google";
 import "./globals.css";
 import Providers from "./components/Providers";
 import Agent from "./components/Agent";
 
 const body = Fira_Sans({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-body-face", display: "swap" });
+const display = Sora({ subsets: ["latin"], variable: "--font-display-face", display: "swap" });
 const mono = Fira_Code({ subsets: ["latin"], variable: "--font-mono-face", display: "swap" });
 
 export const metadata: Metadata = {
@@ -12,11 +13,11 @@ export const metadata: Metadata = {
   description: "Nine AI agents that take orders, quote lanes, plan routes, watch every shipment and fix problems — and ask a person before anything costly happens. By Zovak.",
 };
 
-export const viewport: Viewport = { themeColor: "#0a0d1a" };
+export const viewport: Viewport = { themeColor: "#03050e" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${body.variable} ${mono.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${body.variable} ${mono.variable} ${display.variable}`}>
       <body className="antialiased" suppressHydrationWarning>
         <Providers>{children}</Providers>
         <Agent />
