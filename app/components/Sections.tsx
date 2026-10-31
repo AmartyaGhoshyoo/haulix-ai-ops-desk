@@ -221,11 +221,11 @@ export function Tower() {
     <section id="tower" data-cam="tower" className="relative flex min-h-[150vh] items-center py-24">
       <Wrap>
         <div className="hud max-w-[38rem] rounded-3xl p-6 md:p-8">
-          <Kicker>Control tower · port</Kicker>
+          <Kicker>Control tower · warehouse</Kicker>
           <h2 className="mt-4 text-[clamp(2rem,4vw,3.1rem)] font-extrabold uppercase leading-[0.95]">
-            <RiseWords text="Nine agents. *One port.*" />
+            <RiseWords text="Nine agents. *One warehouse.*" />
           </h2>
-          <p className="mt-3 text-ink/70">Each agent owns one job across the port and the roads. Pick one — the tower locks on and shows what it did today.</p>
+          <p className="mt-3 text-ink/70">Each agent owns one bay of the warehouse and one job on the roads. Pick one — its bay lights up in red and you see what it did today.</p>
           <div className="mt-6 grid grid-cols-3 gap-2">
             {AGENTS.map((ag, i) => {
               const I = AGENT_ICONS[ag.icon] ?? Inbox;
