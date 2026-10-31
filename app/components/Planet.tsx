@@ -80,7 +80,8 @@ const earthFragment = /* glsl */ `
     float h = dot(day, vec3(0.299, 0.587, 0.114));
     vec3 dpx = dFdx(vPos), dpy = dFdy(vPos); vec3 r1 = cross(dpy, n), r2 = cross(n, dpx); float det = dot(dpx, r1);
     vec3 grad = sign(det) * (dFdx(h) * r1 + dFdy(h) * r2);
-    vec3 nb = normalize(abs(det) * n - 0.35 * grad * (1.0 - ocean));
+    vec3 nbRaw = abs(det) * n - 0.35 * grad * (1.0 - ocean);
+    vec3 nb = dot(nbRaw, nbRaw) > 1e-12 ? normalize(nbRaw) : n;
     float ndl = dot(n, uSun);
     float dayAmt = smoothstep(-0.12, 0.32, ndl);
     float lit = clamp(dot(nb, uSun), 0.0, 1.0);
@@ -105,7 +106,9 @@ const earthFragment = /* glsl */ `
     // Atmosphere rim.
     float rim = pow(1.0 - max(dot(n, V), 0.0), 2.6);
     col += vec3(0.32, 0.55, 1.0) * rim * (0.15 + 0.85 * dayAmt) * 1.1;
-    gl_FragColor = vec4(col, 1.0);
+    // Bloom spreads any NaN/inf pixel into a black square, so clamp the output.
+    if (any(isnan(col)) || any(isinf(col))) col = vec3(0.0);
+    gl_FragColor = vec4(clamp(col, 0.0, 16.0), 1.0);
   }`;
 
 const cloudFragment = /* glsl */ `
@@ -119,7 +122,8 @@ const cloudFragment = /* glsl */ `
     float light = smoothstep(-0.25, 0.4, ndl);
     float edge = pow(1.0 - max(dot(n, V), 0.0), 2.0);
     vec3 col = mix(vec3(0.02, 0.03, 0.06), vec3(1.0), light) + vec3(0.2, 0.35, 0.8) * edge * light * 0.3;
-    gl_FragColor = vec4(col, c * uOpacity * (0.25 + 0.75 * light));
+    if (any(isnan(col))) col = vec3(0.0);
+    gl_FragColor = vec4(clamp(col, 0.0, 4.0), clamp(c * uOpacity * (0.25 + 0.75 * light), 0.0, 1.0));
   }`;
 
 export default function Planet() {
@@ -288,7 +292,8 @@ export default function Planet() {
           vec3 neb = vec3(0.12,0.3,1.0)*w.x*w.y + vec3(0.9,0.2,0.35)*w.z*0.35;
           neb *= smoothstep(0.3, 1.0, abs(uv.y)) * pow(smoothstep(-0.6, 1.0, -uv.x*uv.y), 2.0);
           vec3 bg = vec3(0.012,0.02,0.055) * (1.0 - 0.45*length(uv));
-          gl_FragColor = vec4(s + bg + neb*0.14, 1.0); }`,
+          vec3 o = s + bg + neb*0.14; if (any(isnan(o))) o = bg;
+          gl_FragColor = vec4(o, 1.0); }`,
     });
     composer.addPass(finish);
     composer.addPass(new OutputPass());

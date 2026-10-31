@@ -3,7 +3,7 @@
 // Glass sections that scroll over the HD planet: hero, the agent workstation, the nine agents,
 // network numbers, guardrails, and the closing call to action.
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { animate, motion, useInView } from "motion/react";
+import { AnimatePresence, animate, motion, useInView, useMotionValueEvent, useScroll } from "motion/react";
 import { ArrowRight, Boxes, FileText, Globe, Inbox, MessageSquare, Receipt, Route, ShieldCheck, TriangleAlert, Truck, Wallet, type LucideIcon } from "lucide-react";
 import { AGENTS, CHANNELS, GUARDRAILS, SITE } from "../data/site";
 import { openAssistant } from "./assistant/Assistant";
@@ -121,21 +121,88 @@ export function Hero() {
   );
 }
 
+const STAGE_COPY = [
+  { agent: "Intake agent", line: "Emails, WhatsApps, PDFs and calls become bookings while you watch." },
+  { agent: "Route planner", line: "A 2 pm order lands. The whole run re-plans in under a second." },
+  { agent: "Exception agent", line: "Problems arrive with a plan, a cost and a new ETA. You approve." },
+  { agent: "Ops board", line: "Every lane, every status, one screen — updated as the agents work." },
+];
+
 export function WorkstationSection() {
+  const ref = useRef<HTMLElement>(null);
+  const [wide, setWide] = useState(false);
+  const [stage, setStage] = useState(0);
+  const [sub, setSub] = useState(0);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  useEffect(() => {
+    const on = () => setWide(window.innerWidth >= 1024 && window.innerHeight >= 700);
+    on();
+    window.addEventListener("resize", on);
+    return () => window.removeEventListener("resize", on);
+  }, []);
+  useMotionValueEvent(scrollYProgress, "change", (p) => {
+    const x = Math.min(0.9999, Math.max(0, p)) * 4;
+    setStage(Math.floor(x));
+    setSub(Math.round((x % 1) * 20) / 20);
+  });
+  // Jump to a stage by scrolling to its place in the pinned section.
+  const goStage = (i: number) => {
+    const el = ref.current;
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: top + ((i + 0.35) / 4) * (el.offsetHeight - window.innerHeight), behavior: "smooth" });
+  };
+
+  const head = (
+    <div className="mx-auto mb-8 max-w-[680px] text-center">
+      <Eyebrow>The workstation</Eyebrow>
+      <h2 className="font-display text-[clamp(1.9rem,3.6vw,2.8rem)] font-bold leading-[1.06] tracking-[-0.02em]">One screen. Nine agents. You make the calls.</h2>
+    </div>
+  );
+
+  // One element either way, so the scroll tracker always has its target.
   return (
-    <section id="workstation" className="relative mx-auto max-w-[1180px] px-4 py-[clamp(80px,12vw,150px)] sm:px-6">
-      <div className="mx-auto mb-12 max-w-[680px] text-center">
-        <Reveal><Eyebrow>The workstation</Eyebrow></Reveal>
-        <Reveal d={80}>
-          <h2 className="font-display text-[clamp(1.9rem,4.2vw,3.1rem)] font-bold leading-[1.06] tracking-[-0.02em] [text-shadow:0_2px_40px_rgba(0,0,0,.6)]">One screen. Nine agents. You make the calls.</h2>
-        </Reveal>
-        <Reveal d={160}>
-          <p className="mt-5 text-[1.05rem] leading-relaxed text-ink/60">This is live. Orders stream in and become bookings. Open Routes and drop in a 2 pm order. Approve or decline what the exception agent proposes.</p>
-        </Reveal>
+    <section id="workstation" ref={ref} className={wide ? "relative h-[460vh]" : "relative mx-auto max-w-[1180px] px-4 py-[clamp(80px,12vw,150px)] sm:px-6"}>
+      {!wide ? (
+        <>
+          <Reveal>{head}</Reveal>
+          <Reveal d={120}>
+            <Workstation />
+          </Reveal>
+        </>
+      ) : (
+      <div className="sticky top-0 flex h-screen flex-col justify-center px-6">
+        <div className="mx-auto grid w-full max-w-[1240px] grid-cols-[260px_1fr] items-center gap-8">
+          {/* Stage rail: which agent is working, with a progress line that fills as you scroll */}
+          <div className="glass-strong rounded-[22px] p-6">
+            <Eyebrow>The workstation</Eyebrow>
+            <h2 className="font-display text-[2.2rem] font-bold leading-[1.05] tracking-[-0.02em]">Scroll to watch the agents work.</h2>
+            <ol className="relative mt-8 space-y-5 border-l border-white/10 pl-5">
+              <motion.span className="absolute -left-px top-0 w-px origin-top bg-radar" style={{ height: "100%", scaleY: scrollYProgress }} />
+              {STAGE_COPY.map((s, i) => (
+                <li key={s.agent}>
+                  <button onClick={() => goStage(i)} className="cursor-pointer text-left">
+                    <p className={`font-mono text-[0.7rem] uppercase tracking-[0.16em] transition-colors ${i === stage ? "text-radar-soft" : "text-ink/35"}`}>
+                      0{i + 1} · {s.agent}
+                    </p>
+                    <AnimatePresence initial={false}>
+                      {i === stage && (
+                        <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden pt-1.5 text-[0.95rem] leading-relaxed text-ink/75">
+                          {s.line}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                  </button>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <motion.div initial={{ opacity: 0, y: 40, rotateX: 8 }} whileInView={{ opacity: 1, y: 0, rotateX: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 1, ease }} style={{ transformPerspective: 1400 }}>
+            <Workstation stage={stage} sub={sub} onStage={goStage} />
+          </motion.div>
+        </div>
       </div>
-      <Reveal d={120}>
-        <Workstation />
-      </Reveal>
+      )}
     </section>
   );
 }

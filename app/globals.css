@@ -122,3 +122,6 @@ html.lenis body {
 }
 /* Copy stays legible wherever the bright planet passes behind it. */
 main h1, main h2, main > header p, main section > div > div > p { text-shadow: 0 1px 26px rgba(3, 5, 14, 0.75), 0 0 2px rgba(3, 5, 14, 0.5); }
+
+/* Live widgets change height; never let the browser shift the scroll position because of it. */
+html, body { overflow-anchor: none; }

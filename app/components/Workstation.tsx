@@ -76,11 +76,21 @@ const TABS: { key: "desk" | "routes" | "exceptions" | "board"; label: string; ic
   { key: "board", label: "Ops board", icon: LayoutGrid },
 ];
 
-export default function Workstation() {
-  const [tab, setTab] = useState<(typeof TABS)[number]["key"]>("desk");
+type TabKey = (typeof TABS)[number]["key"];
+export const STAGES = TABS.map((t) => t.label);
+
+/** `stage` (0–3) and `sub` (0–1 within it) come from the page scroll on wide screens; otherwise tabs. */
+export default function Workstation({ stage, sub = 0, onStage }: { stage?: number; sub?: number; onStage?(i: number): void }) {
+  const [own, setOwn] = useState<TabKey>("desk");
+  const tab: TabKey = stage !== undefined ? TABS[stage]!.key : own;
+  const setTab = (k: TabKey) => {
+    const i = TABS.findIndex((t) => t.key === k);
+    if (onStage) onStage(i);
+    else setOwn(k);
+  };
   const [feed, setFeed] = useState<{ n: number; o: (typeof ORDERS)[number]; done: boolean }[]>([]);
   const [decided, setDecided] = useState<Record<string, "ok" | "no">>({});
-  const [added, setAdded] = useState(false);
+  const [manual, setManual] = useState<boolean | null>(null);
   const [booked, setBooked] = useState(148);
   const nextId = useRef(0);
 
@@ -99,6 +109,10 @@ export default function Workstation() {
     const t = setInterval(push, 2600);
     return () => clearInterval(t);
   }, []);
+
+  // Scrolling through the Routes stage drops in the 2 pm order by itself halfway through,
+  // unless the visitor has pressed the button themselves.
+  const added = manual ?? (stage === 1 && sub > 0.45);
 
   const open = EXCEPTIONS.filter((e) => !decided[e.id]);
   const decide = (id: string, v: "ok" | "no") => setDecided((d) => ({ ...d, [id]: v }));
@@ -148,13 +162,13 @@ export default function Workstation() {
         </nav>
 
         {/* Views */}
-        <div className="min-h-[430px] p-3 sm:p-4">
+        <div className="h-[470px] overflow-y-auto p-3 [scrollbar-width:thin] sm:p-4" data-lenis-prevent>
           <AnimatePresence mode="wait">
             <motion.div key={tab} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.25, ease }}>
               {tab === "desk" && (
                 <div className="grid gap-3 lg:grid-cols-[1.15fr_1fr]">
                   <Panel title="Intake → bookings" note="live">
-                    <ul className="space-y-2">
+                    <ul className="h-[372px] space-y-2 overflow-hidden [mask-image:linear-gradient(180deg,#000_85%,transparent)]">
                       <AnimatePresence initial={false} mode="popLayout">
                         {feed.map(({ n, o, done }) => {
                           const S = SRC[o.src]!;
@@ -183,6 +197,7 @@ export default function Workstation() {
                     </ul>
                   </Panel>
                   <Panel title="Waiting for you" note={`${open.length} open`}>
+                    <div className="h-[372px] overflow-hidden">
                     <ExceptionList items={open.slice(0, 2)} decide={decide} compact />
                     {open.length === 0 && <AllClear />}
                     {open.length > 2 && (
@@ -190,6 +205,7 @@ export default function Workstation() {
                         See all {open.length} →
                       </button>
                     )}
+                    </div>
                   </Panel>
                 </div>
               )}
@@ -243,7 +259,7 @@ export default function Workstation() {
                         <p className="rounded-xl bg-white/[0.04] p-3 text-[0.8rem] text-ink/60">A customer just called with a 2 pm pickup in Gulshan.</p>
                       )}
                       <button
-                        onClick={() => setAdded((a) => !a)}
+                        onClick={() => setManual(!added)}
                         className="flex min-h-[42px] w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-radar text-[0.85rem] font-semibold text-white hover:bg-[#4a7dff]"
                       >
                         {added ? "Undo" : (
